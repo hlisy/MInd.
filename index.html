@@ -1,0 +1,528 @@
+<!doctype html>
+
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>에코-마인드: 심리 기반 환경 실천 플랫폼</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ----------------------------
+       Design: pastel gradient system
+       Use layered gradients to avoid single solid color
+       ----------------------------*/
+    :root{
+      --bg-1: linear-gradient(135deg, #F9F5FF 0%, #EAF7FF 50%);
+      --card-1: linear-gradient(120deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+      --accent: linear-gradient(90deg,#C7FFD8 0%, #D6E6FF 100%);
+      --glass: rgba(255,255,255,0.65);
+      --text: #1b2430;
+      --muted: #55606a;
+      --radius: 18px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }html,body{height:100%;}
+body{
+  margin:0;
+  color:var(--text);
+  background:var(--bg-1);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y:scroll;
+  scroll-behavior: smooth; /* smooth scrolling */
+}
+
+/* Full-screen sections */
+.section{
+  min-height:100vh; /* fills screen */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px;
+  box-sizing:border-box;
+}
+
+.container{
+  width:min(1100px, 94%);
+  margin:auto;
+  display:grid;
+  grid-template-columns: 1fr 420px;
+  gap:28px;
+  align-items:start;
+}
+
+/* Header */
+header{position:fixed;left:16px;right:16px;top:16px;z-index:60}
+.nav{
+  display:flex;gap:12px;align-items:center;justify-content:flex-end;
+}
+.logo{font-weight:700;letter-spacing:0.2px;background:var(--accent);padding:10px 14px;border-radius:12px;display:inline-block}
+.nav a{font-size:14px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--muted)}
+.nav a.active{background:var(--card-1);color:var(--text)}
+
+/* Card styles */
+.card{
+  background:var(--card-1);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow: 0 6px 30px rgba(17,24,39,0.06);
+  backdrop-filter: blur(6px);
+}
+
+h1{margin:0 0 8px 0;font-size:28px}
+p.lead{margin:0 0 14px 0;color:var(--muted)}
+
+/* Left column main hero */
+.hero{
+  padding:28px;border-radius:20px;display:flex;flex-direction:column;gap:18px
+}
+
+.hero .big{
+  font-size:20px;font-weight:600
+}
+
+/* Right column: dashboard */
+.dashboard{position:sticky;top:120px}
+
+/* action list */
+.actions{display:flex;flex-direction:column;gap:12px}
+.action-row{display:flex;gap:12px;align-items:center}
+.action-input{flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(20,20,30,0.06);background:transparent}
+.btn{padding:10px 12px;border-radius:12px;border:0;background:linear-gradient(90deg,#86F3C6,#C2D6FF);cursor:pointer;font-weight:600}
+
+/* badge shelf */
+.badges{display:flex;flex-wrap:wrap;gap:10px;padding:10px}
+.badge{background:linear-gradient(135deg,#FFF9F0,#E8FFF3);padding:8px 12px;border-radius:999px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transform:translateY(0);transition:transform .25s}
+
+/* contributions */
+.contrib{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* storytelling area */
+.story{
+  display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:14px;background:linear-gradient(135deg,#FFF,#F2FBFF);
+}
+
+/* visual helper */
+.meter{height:18px;border-radius:999px;background:linear-gradient(90deg,#DFF7E8,#EDEBFF);overflow:hidden}
+.meter > i{display:block;height:100%;background:linear-gradient(90deg,#66E2A8,#7FB7FF);width:0%}
+
+/* small print */
+.muted{color:var(--muted);font-size:13px}
+
+footer{padding:18px;text-align:center;color:var(--muted)}
+
+/* responsive */
+@media (max-width:980px){
+  .container{grid-template-columns:1fr}
+  header{left:8px;right:8px}
+  .dashboard{position:relative;top:unset}
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="grid-template-columns:1fr;align-items:center">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div class="logo">에코-마인드</div>
+        <nav class="nav">
+          <a href="#hero" class="active">홈</a>
+          <a href="#actions">실천</a>
+          <a href="#impact">영향 시각화</a>
+          <a href="#story">스토리</a>
+        </nav>
+      </div>
+    </div>
+  </header>  <!-- HERO (section 1) -->  <section id="hero" class="section">
+    <div class="container">
+      <main class="card hero">
+        <div>
+          <h1>나의 작은 실천, 연결된 변화</h1>
+          <p class="lead">심리적 거리와 낮은 효능감 때문에 행동하기 어려운 사람들을 위해 ‘작은 성공 경험’과 '즉각적 피드백'으로 지속 가능한 실천을 만들어요.</p>
+        </div><div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <div style="flex:1;min-width:220px">
+        <div class="card" style="padding:14px">
+          <div style="font-weight:700">오늘의 미션</div>
+          <div class="muted">간단한 행동을 선택하고 실행하세요. 입력만 해도 보상이 생깁니다.</div>
+          <div style="height:10px"></div>
+          <div class="meter"><i id="today-meter"></i></div>
+        </div>
+      </div>
+
+      <div style="width:220px">
+        <div class="card" style="padding:12px;text-align:center">
+          <div style="font-weight:700">누적 기여</div>
+          <div id="total-kg" style="font-size:20px;margin-top:8px">0</div>
+          <div class="muted">kg CO₂ 절약 환산</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn" onclick="scrollToSection('actions')">실천하러 가기</button>
+      <button class="btn" onclick="scrollToSection('impact')">영향 보기</button>
+    </div>
+  </main>
+
+  <aside class="dashboard card">
+    <div style="font-weight:700">보상함</div>
+    <div class="muted" style="font-size:13px">실천을 입력하면 즉시 뱃지가 추가됩니다.</div>
+    <div class="badges" id="badge-shelf" style="margin-top:12px;min-height:72px"></div>
+
+    <div style="height:18px"></div>
+    <div style="font-weight:700">오늘의 지역소식</div>
+    <div class="muted" style="font-size:13px">접근 허용 시 위치 기반 간단 정보 제공</div>
+    <div id="region-box" class="card" style="margin-top:10px;padding:12px">지역 정보를 불러오려면 <button class="btn" style="padding:6px 8px;font-size:13px" onclick="getRegionInfo()">위치 허용</button></div>
+  </aside>
+</div>
+
+  </section>  <!-- ACTIONS (section 2) -->  <section id="actions" class="section">
+    <div class="container">
+      <main class="card">
+        <h1>작은 실천 목록</h1>
+        <p class="lead">하루에 한 가지씩 실행하고 입력하세요. 입력 즉시 보상과 누적 기여가 계산됩니다.</p><div class="actions" style="margin-top:14px">
+      <!-- Reusable action row: user types short note and clicks Done -->
+      <div class="card action-row">
+        <input id="act-1" class="action-input" placeholder="텀블러 사용: 몇 번 사용했나요? (숫자 입력)"/>
+        <button class="btn" onclick="completeAction('텀블러 사용', 'act-1', 0.05)">완료</button>
+      </div>
+
+      <div class="card action-row">
+        <input id="act-2" class="action-input" placeholder="대중교통 이용: 몇 km 이동했나요? (숫자 입력)"/>
+        <button class="btn" onclick="completeAction('대중교통 이용', 'act-2', 0.12)">완료</button>
+      </div>
+
+      <div class="card action-row">
+        <input id="act-3" class="action-input" placeholder="일회용 비닐/컵 줄이기: 몇 개 줄였나요? (숫자 입력)"/>
+        <button class="btn" onclick="completeAction('1회용 줄이기', 'act-3', 0.02)">완료</button>
+      </div>
+
+      <div class="card action-row">
+        <input id="act-4" class="action-input" placeholder="쓰레기 줍기(분): 몇 분 했나요? (숫자 입력)"/>
+        <button class="btn" onclick="completeAction('쓰레기 줍기', 'act-4', 0.03)">완료</button>
+      </div>
+
+      <div class="card action-row">
+        <input id="act-5" class="action-input" placeholder="전기절약: 전등 몇 분 껐나요? (숫자 입력)"/>
+        <button class="btn" onclick="completeAction('전기절약', 'act-5', 0.01)">완료</button>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <div style="font-weight:700">내 실천 기록</div>
+      <div id="log" class="muted" style="margin-top:8px;max-height:220px;overflow:auto;padding:8px;border-radius:10px"></div>
+    </div>
+  </main>
+
+  <aside class="card">
+    <div style="font-weight:700">실천 통계</div>
+    <div style="height:10px"></div>
+    <canvas id="contribChart" style="width:100%;height:220px"></canvas>
+
+    <div style="height:12px"></div>
+    <div style="font-weight:700">누적 환산 설명</div>
+    <div class="muted">절약된 CO₂는 kg 단위로 표시되며, 나무 심기/전기 절감 효과로 환산됩니다.</div>
+  </aside>
+</div>
+
+  </section>  <!-- IMPACT (section 3) -->  <section id="impact" class="section">
+    <div class="container">
+      <main class="card">
+        <h1>영향 시각화</h1>
+        <p class="lead">당신의 행동이 누적되어 어떤 변화를 만드는지 시뮬레이션으로 보여줍니다.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="card">
+        <div style="font-weight:700">일별 실천 (최근 14일)</div>
+        <canvas id="dailyChart" style="width:100%;height:160px"></canvas>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:700">누적 기여</div>
+        <div style="display:flex;gap:12px;align-items:center;justify-content:center;padding:8px">
+          <div style="text-align:center">
+            <div id="trees" style="font-size:28px;font-weight:700">0</div>
+            <div class="muted">나무 심기 환산</div>
+          </div>
+          <div style="text-align:center">
+            <div id="house-hours" style="font-size:28px;font-weight:700">0</div>
+            <div class="muted">가정 전기 사용 절감 시간 환산</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px" class="story card">
+      <div style="font-weight:700">지역 기반 환경 메시지</div>
+      <div id="region-article" class="muted">위치 정보를 허용하면, 당신의 지역에 맞춘 짧은 사례와 권장 실천이 표시됩니다.</div>
+    </div>
+  </main>
+
+  <aside class="card">
+    <div style="font-weight:700">상시 미션</div>
+    <div class="muted">습관화하기 좋은 마이크로 미션을 표시합니다.</div>
+    <ul style="margin-top:10px" id="micro-list">
+      <li>텀블러 챙기기 (출발 전)</li>
+      <li>대중교통 우선으로 이동하기</li>
+      <li>불필요한 전등 끄기 (외출 전)</li>
+    </ul>
+  </aside>
+</div>
+
+  </section>  <!-- STORY (section 4) -->  <section id="story" class="section">
+    <div class="container">
+      <main class="card">
+        <h1>공감 스토리</h1>
+        <p class="lead">행동의 의미를 감정적으로 연결하기 위한 짧은 이야기와 사용자 제출 스토리.</p><div class="story" style="margin-top:12px">
+      <div style="font-weight:700">예시 이야기 — 미래의 편지</div>
+      <div class="muted">"안녕, 나는 2035년의 네 친구야. 우리가 함께 텀블러를 쓰고, 매주 쓰레기를 주운 덕분에 내 동네 하천이 조금씩 회복되었어. 오늘 너에게 고맙다고 전하고 싶어."</div>
+    </div>
+
+    <div style="margin-top:12px" class="card">
+      <div style="font-weight:700">너의 스토리 제출</div>
+      <textarea id="story-input" placeholder="짧은 실천 이야기나 느낀 점을 적어보세요" style="width:100%;height:120px;padding:12px;border-radius:12px;border:1px solid rgba(17,24,39,0.06);resize:none"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" onclick="submitStory()">제출하고 배지 받기</button>
+        <div class="muted" style="align-self:center">친구들과 공유하면 영향력이 커져요</div>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="card">
+    <div style="font-weight:700">감정관리</div>
+    <div class="muted">5분 자연 호흡 명상</div>
+    <button class="btn" onclick="startMiniMeditation()">시작</button>
+    <div id="meditation-box" style="margin-top:12px" class="muted">준비되면 시작 버튼을 누르세요.</div>
+  </aside>
+</div>
+
+  </section>  <footer class="card">
+    제작: 에코-마인드 · 교육용 데모 · 모든 데이터는 예시 데이터입니다.
+  </footer>  <script>
+    /* -----------------------
+       Simple data model in localStorage
+       - actions: array of {date, action, value, co2}
+       - badges: array of badge names
+       ------------------------*/
+
+    const storageKey = 'ecoMindData_v1';
+    const defaultState = { actions: [], badges: [] };
+
+    function loadState(){
+      try{
+        return JSON.parse(localStorage.getItem(storageKey)) || defaultState;
+      }catch(e){return defaultState}
+    }
+    function saveState(s){ localStorage.setItem(storageKey, JSON.stringify(s)); }
+
+    let state = loadState();
+
+    // Basic CO2 conversion factors (kg CO2 per user input unit)
+    // These are simplified, teachable approximations for demonstration.
+    const FACTORS = {
+      '텀블러 사용': 0.05, // per use
+      '대중교통 이용': 0.12, // per km (vs car)
+      '1회용 줄이기': 0.02, // per item
+      '쓰레기 줍기': 0.03, // per minute equivalent
+      '전기절약': 0.01 // per minute of avoided lighting
+    };
+
+    // UI elements
+    const badgeShelf = document.getElementById('badge-shelf');
+    const logBox = document.getElementById('log');
+    const totalKgEl = document.getElementById('total-kg');
+    const todayMeter = document.getElementById('today-meter');
+    const treesEl = document.getElementById('trees');
+    const houseHoursEl = document.getElementById('house-hours');
+
+    // Charts
+    let contribChart, dailyChart;
+
+    function init(){
+      renderBadges();
+      renderLog();
+      updateStats();
+      buildCharts();
+      renderCharts();
+    }
+
+    // award badge with animation when action completed
+    function awardBadge(name){
+      if(state.badges.includes(name)) return; // one badge per type for demo
+      state.badges.push(name);
+      saveState(state);
+      const b = document.createElement('div'); b.className='badge'; b.textContent = name;
+      badgeShelf.appendChild(b);
+      // small pop animation
+      b.animate([{transform:'translateY(-8px)'},{transform:'translateY(0)'}],{duration:400,easing:'ease-out'});
+    }
+
+    function renderBadges(){
+      badgeShelf.innerHTML='';
+      state.badges.forEach(name=>{
+        const b = document.createElement('div'); b.className='badge'; b.textContent = name;
+        badgeShelf.appendChild(b);
+      });
+    }
+
+    function renderLog(){
+      logBox.innerHTML='';
+      state.actions.slice().reverse().forEach(a=>{
+        const el = document.createElement('div');
+        el.style.marginBottom='8px';
+        el.innerHTML = `<strong>${a.action}</strong> — ${a.value} (절약 ${a.co2.toFixed(3)} kg CO₂) <div class=\"muted\">${new Date(a.date).toLocaleString()}</div>`;
+        logBox.appendChild(el);
+      });
+    }
+
+    function updateStats(){
+      const total = state.actions.reduce((s,a)=>s+a.co2,0);
+      totalKgEl.textContent = total.toFixed(2) + ' kg';
+      // meter: today's actions proportion of arbitrary daily goal(1kg)
+      const today = state.actions.filter(a=>{ const d=new Date(a.date); const t=new Date(); return d.toDateString()===t.toDateString()});
+      const todayKg = today.reduce((s,a)=>s+a.co2,0);
+      const pct = Math.min(100, (todayKg / 1)*100);
+      todayMeter.style.width = pct + '%';
+      // trees: convert 10 kg CO2 ~ 1 tree-year (simplified)
+      treesEl.textContent = Math.floor(total/10);
+      houseHoursEl.textContent = Math.floor(total/0.2); // pretend 0.2kg per hour saved
+
+      // update charts if exist
+      if(contribChart) contribChart.data.datasets[0].data = [total, Math.max(0,50-total)];
+      if(contribChart) contribChart.update();
+    }
+
+    function completeAction(name, inputId, factor){
+      const raw = document.getElementById(inputId).value.trim();
+      if(!raw){
+        alert('숫자를 입력해 주세요 (예: 2)'); return;
+      }
+      const num = Number(raw);
+      if(isNaN(num) || num<=0){ alert('유효한 숫자를 입력하세요.'); return; }
+
+      const co2 = num * factor; // simplified calc
+      const entry = {date: new Date().toISOString(), action: name, value: num, co2};
+      state.actions.push(entry);
+      saveState(state);
+      renderLog();
+      updateStats();
+
+      // award badge and visual reward
+      awardBadge(name + ' 배지');
+      showConfetti();
+
+      // animate meter
+      animateMeter();
+
+      // clear input
+      document.getElementById(inputId).value='';
+
+      // update charts
+      renderCharts();
+    }
+
+    // Charts building
+    function buildCharts(){
+      const ctx = document.getElementById('contribChart').getContext('2d');
+      contribChart = new Chart(ctx,{
+        type:'doughnut',
+        data:{labels:['절약된 CO₂ (kg)','남은 목표(예시)'],datasets:[{data:[0,50],backgroundColor:['rgba(102,226,168,0.9)','rgba(197,214,255,0.8)']} ]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+      });
+
+      const ctx2 = document.getElementById('dailyChart').getContext('2d');
+      dailyChart = new Chart(ctx2,{type:'bar',data:{labels:[],datasets:[{label:'kg CO₂',data:[],backgroundColor:'rgba(100,160,255,0.8)'}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}});
+    }
+
+    function renderCharts(){
+      const total = state.actions.reduce((s,a)=>s+a.co2,0);
+      if(contribChart){contribChart.data.datasets[0].data[0]=Number(total.toFixed(2)); contribChart.data.datasets[0].data[1]=Math.max(0,50-total); contribChart.update();}
+
+      // daily for 14 days
+      const days = [];
+      const values = [];
+      for(let i=13;i>=0;i--){
+        const d = new Date(); d.setDate(d.getDate()-i);
+        const label = `${d.getMonth()+1}/${d.getDate()}`;
+        days.push(label);
+        const dayTotal = state.actions.filter(a=>new Date(a.date).toDateString()===d.toDateString()).reduce((s,a)=>s+a.co2,0);
+        values.push(Number(dayTotal.toFixed(2)));
+      }
+      dailyChart.data.labels = days;
+      dailyChart.data.datasets[0].data = values;
+      dailyChart.update();
+    }
+
+    // small confetti using canvas
+    function showConfetti(){
+      const canvas = document.createElement('canvas');
+      canvas.style.position='fixed'; canvas.style.left=0; canvas.style.top=0; canvas.style.pointerEvents='none'; canvas.width=window.innerWidth; canvas.height=window.innerHeight; canvas.style.zIndex=9999;
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      const pieces = [];
+      for(let i=0;i<60;i++) pieces.push({x:Math.random()*canvas.width,y:-Math.random()*200,vy:Math.random()*3+2, size:4+Math.random()*6, color:['#FFB3B3','#BFF0C9','#C8E0FF'][Math.floor(Math.random()*3)]});
+      let t=0;
+      function frame(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(const p of pieces){ p.y += p.vy; ctx.fillStyle=p.color; ctx.fillRect(p.x,p.y,p.size, p.size); }
+        t++; if(t>90){ document.body.removeChild(canvas); } else requestAnimationFrame(frame);
+      }
+      frame();
+    }
+
+    function animateMeter(){
+      const el = document.getElementById('today-meter');
+      el.animate([{width:'0%'},{width:'100%'}],{duration:500,fill:'forwards'});
+    }
+
+    // STORY submit
+    function submitStory(){
+      const text = document.getElementById('story-input').value.trim();
+      if(!text){ alert('간단한 이야기를 적어주세요'); return; }
+      // treat story submission as small action
+      state.actions.push({date:new Date().toISOString(), action:'스토리 제출', value:1, co2:0.02});
+      state.badges.push('스토리 친구 배지');
+      saveState(state);
+      renderBadges(); renderLog(); updateStats(); renderCharts(); showConfetti();
+      document.getElementById('story-input').value='';
+      alert('감사합니다! 스토리를 제출하면 작은 보상을 받습니다.');
+    }
+
+    // micro meditation
+    let medTimer;
+    function startMiniMeditation(){
+      const box = document.getElementById('meditation-box');
+      let t=5*60; box.textContent = `명상 진행 중: ${Math.ceil(t/60)}분`; 
+      clearInterval(medTimer);
+      medTimer = setInterval(()=>{
+        t--; box.textContent = `명상 진행 중: ${Math.ceil(t/60)}분 ${t%60}초`;
+        if(t<=0){ clearInterval(medTimer); box.textContent='완료! 기분이나 생각을 적어보세요.'; state.actions.push({date:new Date().toISOString(), action:'명상', value:5, co2:0}); saveState(state); }
+      },1000);
+    }
+
+    // region info: try geolocation then show canned examples (no external API used)
+    function getRegionInfo(){
+      if(!navigator.geolocation){ document.getElementById('region-box').innerText='이 브라우저는 위치 서비스를 지원하지 않습니다.'; return; }
+      navigator.geolocation.getCurrentPosition(pos=>{
+        const {latitude, longitude} = pos.coords;
+        // simple heuristic: north/south/east/west bucket for demo
+        const lat = latitude; const long = longitude;
+        let article='';
+        if(lat>45) article = '북쪽 지역: 눈 녹는 시기가 빨라져 하천 토양 유실 가능성이 증가합니다. 지역 하천 청소와 수목 보호 활동을 추천합니다.';
+        else if(lat>35) article = '중간 위도: 여름 고온일수가 늘어나고 있습니다. 일시적 그늘막 설치와 물 절약 캠페인을 권장합니다.';
+        else article = '남쪽 지역: 해수면 상승 영향을 받는 지역이 있을 수 있습니다. 쓰레기 유입을 줄이고 해안 정화 활동 참여를 추천합니다.';
+        document.getElementById('region-box').innerHTML = `<div style=\"font-weight:700\">위치 (예시): ${latitude.toFixed(2)}, ${longitude.toFixed(2)}</div><div class=\"muted\">${article}</div>`;
+        document.getElementById('region-article').textContent = article;
+      }, err=>{
+        document.getElementById('region-box').innerText = '위치 정보를 허용하지 않았습니다. 또는 오류가 발생했습니다.';
+      },{timeout:8000});
+    }
+
+    // small utility
+    function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+    // initialize charts and UI on load
+    window.addEventListener('load', ()=>{ init(); });
+  </script></body>
+</html>
